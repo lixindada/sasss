@@ -1,0 +1,75 @@
+@charset "UTF-8";
+$width:100px;
+$bg:#000;
+$color:red;
+$red:yellow;
+
+/* 重用模块*/
+@mixin bg_yellow{
+    background:#FFFF00;
+}
+@mixin transition{
+    transition:1s;
+}
+/* 参数模块*/
+@mixin widths($value,$radius){
+    width:$value;
+    height:$value;
+    border:1px solid #222222;
+    border-radius:$radius;
+}
+.div1{
+    width:$width;
+    height:$width;
+    background:$bg;
+    color:$red;
+}
+.div2{
+    @extend .div1;
+    font-size:20px;
+}
+.div3{
+    @include bg_yellow;
+}
+.div4{
+    @include bg_yellow;
+    @include widths(400px,10px);
+}
+/* 选择器嵌套  */
+#box{
+    width:1000px;
+    margin:0 auto;
+    /* 属性嵌套 */
+    border:{
+        left: 1px solid blue;
+        right :1px solid black;
+        top: 1px solid red;
+        bottom: 1px solid green;
+    }
+    .div5{
+        @include bg_yellow;
+        @include transition;
+        &:hover{
+            background:#000000;
+            color:#fff;
+        }
+    }
+    
+}
+$grid-prefix: div !default; /*定义全局变量*/
+%style{    /*通过%placeholder声明的代码，如果不被@extend调用的话，不会产生任何代码*/ 
+    background:#0000FF;
+    text-align:center;
+    @media screen and (max-width:992px){
+        width:90%;
+    }
+}
+@for $i from 1 through 8 {
+    .#{$grid-prefix}#{$i}{
+        @extend %style; 
+    }
+}
+#box{
+    @extend %style;
+    background:#fff;
+}

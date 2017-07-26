@@ -1,0 +1,8 @@
+@mixin jrx($value){
+    animation:$value;
+    -webkit-animation:$value;
+    -moz-animation:$value;
+    -o-animation:$value;
+    -ms-animation:$value;
+}
+
